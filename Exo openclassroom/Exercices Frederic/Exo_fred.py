@@ -44,3 +44,60 @@
 #     print(f"Le mot le plus fréquent est : '{mot_present}' avec {freq_max} occurrences.")
 
 
+#Exercice 3 
+
+import csv
+
+class Contact:
+    def __init__(self, nom, prenom, adresse, num_telephone):
+        self.nom = nom
+        self.prenom = prenom
+        self.adresse = adresse
+        self.num_telephone = num_telephone
+    #permet de transformer la classe en liste pour le csv    
+    def transo(self):
+        return [self.nom, self.prenom, self.adresse, self.num_telephone]
+    
+#Teste de la liste 
+contacts = {
+        Contact('Dierickx', "Simon", "Rue gailly 22", "0499500333"),
+        Contact("Dupont", "Richard", "Rue des combattants 66", "04689457852")
+    }
+    
+#nom du fichier csv
+filename = 'contact.csv'
+
+#Ouvrir le fichier en mode écriture 
+with open(filename, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    
+    #Ecrire l'en-tête
+    writer.writerow(['Nom', 'Prenom', 'Adresse', 'Numéro de téléphone'])
+    
+    #ecrire les infos de chasque contact
+    for c in contacts:
+        writer.writerow(c.transo())
+        
+print(f"Les données on été entrée dans le fichier {filename}")
+
+#Fonction pour trier les contacts 
+
+def tri_contact(contacts, critere='nom'):
+    if critere == "nom":
+        return sorted(contacts, key=lambda contact: contact.nom)
+    elif critere == 'prenom':
+        return sorted(contacts, key=lambda contact: contact.prenom)
+    elif critere == "adresse":
+        return sorted(contacts, key=lambda contact: contact.adresse)
+    elif critere == "num_telephone":
+        return  sorted(contacts, key=lambda contact: contact.num_telephone)
+    else :
+        return "Aucun critère n'est bon"
+    
+contact_tri = tri_contact(contacts, critere="prenom")
+
+for i in  contact_tri:
+    print('Les contacts ont été trié')
+
+
+
